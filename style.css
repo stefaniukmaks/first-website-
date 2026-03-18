@@ -1,0 +1,721 @@
+@font-face {
+  font-family: 'Ruslan Display';
+  src: url('./RuslanDisplay.woff2') format('woff2');
+}
+@font-face {
+    font-family: 'Montserrat-bold';
+    src: url(./Montserrat-Bold.woff2) format('woff2');
+}
+@font-face {
+    font-family: 'Montserrat-thin';
+    src: url(./Montserrat-Thin.woff2) format("woff2");
+}
+
+/**
+  Нормализация блочной модели
+ */
+*,
+::before,
+::after {
+  box-sizing: border-box;
+}
+
+/**
+  Убираем внутренние отступы слева тегам списков,
+  у которых есть атрибут class
+ */
+:where(ul, ol):where([class]) {
+  padding-left: 0;
+}
+
+/**
+  Убираем внешние отступы body и двум другим тегам,
+  у которых есть атрибут class
+ */
+body,
+:where(blockquote, figure, fieldset):where([class]) {
+  margin: 0;
+}
+
+/**
+  Убираем внешние отступы вертикали нужным тегам,
+  у которых есть атрибут class
+ */
+:where(
+  h1,
+  h2,
+  h3,
+  h4,
+  h5,
+  h6,
+  p,
+  ul,
+  ol,
+  dl
+):where([class]) {
+  margin-block: 0;
+}
+
+:where(dd[class]) {
+  margin-left: 0;
+}
+
+:where(fieldset[class]) {
+  padding: 0;
+  border: none;
+}
+
+/**
+  Убираем стандартный маркер маркированному списку,
+  у которого есть атрибут class
+ */
+:where(ul[class]) {
+  list-style: none;
+}
+
+:where(address[class]) {
+  font-style: normal;
+}
+
+/**
+  Обнуляем вертикальные внешние отступы параграфа,
+  объявляем локальную переменную для внешнего отступа вниз,
+  чтобы избежать взаимодействие с более сложным селектором
+ */
+p {
+  --paragraphMarginBottom: 24px;
+
+  margin-block: 0;
+}
+
+/**
+  Внешний отступ вниз для параграфа без атрибута class,
+  который расположен не последним среди своих соседних элементов
+ */
+p:where(:not([class]):not(:last-child)) {
+  margin-bottom: var(--paragraphMarginBottom);
+}
+
+
+/**
+  Упрощаем работу с изображениями и видео
+ */
+img,
+video {
+  display: block;
+  max-width: 100%;
+  height: auto;
+}
+
+/**
+  Наследуем свойства шрифт для полей ввода
+ */
+input,
+textarea,
+select,
+button {
+  font: inherit;
+}
+
+html {
+  /**
+    Пригодится в большинстве ситуаций
+    (когда, например, нужно будет "прижать" футер к низу сайта)
+   */
+  height: 100%;
+  /**
+    Убираем скачок интерфейса по горизонтали
+    при появлении / исчезновении скроллбара
+   */
+  scrollbar-gutter: stable;
+  /**
+    Плавный скролл
+   */
+  scroll-behavior: smooth;
+}
+
+body {
+  /**
+    Пригодится в большинстве ситуаций
+    (когда, например, нужно будет "прижать" футер к низу сайта)
+   */
+  min-height: 100%;
+  /**
+    Унифицированный интерлиньяж
+   */
+  line-height: 1.5;
+}
+
+/**
+  Нормализация высоты элемента ссылки при его инспектировании в DevTools
+ */
+a:where([class]) {
+  display: inline-flex;
+}
+
+/**
+  Курсор-рука при наведении на элемент
+ */
+button,
+label {
+  cursor: pointer;
+}
+
+/**
+  Убирает серую подсветку при тапе на мобильных устройствах (iOS/Android)
+ */
+button {
+  -webkit-tap-highlight-color: transparent;
+}
+
+/**
+  Приводим к единому цвету svg-элементы
+  (за исключением тех, у которых уже указан
+  атрибут fill со значением 'none' или начинается с 'url')
+ */
+:where([fill]:not(
+  [fill="none"],
+  [fill^="url"]
+)) {
+  fill: currentColor;
+}
+
+/**
+  Приводим к единому цвету svg-элементы
+  (за исключением тех, у которых уже указан
+  атрибут stroke со значением 'none')
+ */
+:where([stroke]:not(
+  [stroke="none"],
+  [stroke^="url"]
+)) {
+  stroke: currentColor;
+}
+
+/**
+  Чиним баг задержки смены цвета при взаимодействии с svg-элементами
+ */
+svg * {
+  transition-property: fill, stroke;
+}
+
+/**
+  Приведение рамок таблиц в классический 'collapse' вид
+ */
+:where(table) {
+  border-collapse: collapse;
+  border-color: currentColor;
+}
+
+/**
+  Удаляем все анимации и переходы для людей,
+  которые предпочитают их не использовать
+ */
+@media (prefers-reduced-motion: reduce) {
+  *,
+  ::before,
+  ::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+}
+
+h1, h2, h3, h4, h5, h6 {
+    font-family: 'Ruslan Display';
+    color: var(--color-light-red);
+}
+p, div, button, a, select, input, textarea {
+    font-family: 'Montserrat-bold';
+    color: var(--color-light);
+}
+
+.strong {
+  font-size: 30px;
+  color: var(--color-light-red);
+  font-family: 'Ruslan Display';
+
+}
+.button {
+  transition: color 0.3s ease;
+}
+.button:hover {
+  color: var(--color-light-red);
+}
+.icon {
+  color: var(--color-light-red);
+}
+
+:root {
+    --color-light-red: #BD004F;
+    --color-light: #FFF;
+    --color-dark: #000;
+    --border: 1px solid #FFF;
+ }
+
+body {
+    background-color: #1a1a1a;
+    margin: 0;
+}
+
+
+@media (max-width: 768px) {
+  html,
+  body {
+    font-size: 16px;
+    line-height: 1.45;
+  }
+
+  .navigation {
+    padding: 14px 10px;
+  }
+
+  .navigation-box {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+    justify-content: center;
+  }
+
+  .navigation-item {
+    padding: 8px 10px;
+    font-size: 14px;
+  }
+
+  .navigation-title h1 {
+    font-size: 28px;
+    text-align: center;
+    margin-top: 10px;
+  }
+
+  .samurai-wardrobe .skins,
+  .weapons-box,
+  .stats-grid {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 14px;
+  }
+
+  .koji-skin,
+  .description-video,
+  .biography-description {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+    gap: 10px;
+  }
+
+  .koji-skin img,
+  .koji,
+  .bow-image,
+  .sword-image,
+  .bow-video,
+  .sword-video,
+  video {
+    width: 100%;
+    max-width: 100%;
+    height: auto;
+  }
+
+  .biography-description {
+    padding: 0 12px;
+  }
+
+  .description-border {
+    padding: 12px;
+    border: var(--border);
+    border-radius: 10px;
+    width: 100%;
+    max-width: 100%;
+  }
+
+  .description {
+    font-size: 15px;
+    line-height: 1.5;
+  }
+
+  .strong {
+    font-size: 24px;
+  }
+
+  .stats-grid {
+    align-items: stretch;
+  }
+
+  .stat-card {
+    padding: 10px;
+  }
+
+  .stat-bar-track {
+    height: 10px;
+    border-radius: 999px;
+  }
+
+  .stat-bar-fill {
+    height: 100%;
+    border-radius: 999px;
+  }
+
+  .site-footer {
+    padding: 16px 10px;
+    text-align: center;
+  }
+
+  .back-to-top {
+    position: fixed;
+    bottom: 12px;
+    right: 12px;
+    padding: 8px 12px;
+    font-size: 13px;
+    z-index: 1000;
+  }
+}
+
+@media (max-width: 480px) {
+  .navigation-item {
+    font-size: 12px;
+    padding: 6px 8px;
+  }
+
+  .navigation-title h1 {
+    font-size: 24px;
+  }
+
+  .strong {
+    font-size: 20px;
+  }
+
+  h2 {
+    font-size: 20px;
+  }
+
+  h3 {
+    font-size: 18px;
+  }
+
+  p,
+  .description {
+    font-size: 14px;
+  }
+
+  .biography-description {
+    padding: 0 8px;
+  }
+
+  .description-border {
+    padding: 10px;
+  }
+
+  .button,
+  .navigation-item {
+    width: 100%;
+    text-align: center;
+  }
+}
+
+.navigation-box {
+    max-width: 1600px;
+    margin-top: 20px;
+    margin-left: 30px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+.navigation-item {
+    text-transform: uppercase;
+    text-decoration: none;
+}
+
+h1 {
+    font-size: 48px;
+}
+
+.navigation-title {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.koji-skin {
+    width: 150px;
+    aspect-ratio: 1;
+    border: var(--border);
+    position: relative;
+    overflow: hidden;
+    cursor: pointer;
+}
+
+.koji-skin img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    transition: transform 0.3s ease;
+}
+
+.koji-skin:hover img {
+    transform: scale(1.1);
+}
+
+.skin-description {
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    background: rgba(26, 26, 26, 0.95);
+    color: #FFF;
+    border: var(--border);
+    padding: 30px;
+    max-width: 500px;
+    max-height: 80vh;
+    overflow-y: auto;
+    opacity: 0;
+    visibility: hidden;
+    transition: opacity 0.3s ease, visibility 0.3s ease;
+    z-index: 1000;
+    border-radius: 8px;
+}
+
+.skin-description h3 {
+    margin: 0 0 15px 0;
+    color: #BD004F;
+    font-family: 'Ruslan Display', sans-serif;
+    font-size: 24px;
+}
+
+.skin-description p {
+    margin: 10px 0;
+    line-height: 1.6;
+    font-size: 14px;
+}
+
+.koji-skin:hover .skin-description {
+    opacity: 1;
+    visibility: visible;
+}
+
+.skins {
+    display: flex;
+    justify-content: space-between;
+    padding: 0 20px;
+    margin: 40px;
+}
+
+.high {
+    margin-left: 20px;
+}
+.koji {
+  width: 350px;
+  height: 500px;
+  margin-left: 5px;
+  padding-top: 50px;
+  padding-left: 20px;
+}
+.biography-title {
+  display: flex;
+  justify-content: end;
+}
+
+.right {
+  margin-right: 20px;
+  margin-block: 10px;
+}
+
+.biography-description {
+  display: grid;
+  grid-template-columns: 360px auto;
+  border: 1px solid var(--color-light-red);
+  border-radius: 20px;
+  margin: 40px;
+}
+
+.description {
+  line-height: 1.8; 
+}
+
+.description-border {
+  border-left: 1px solid var(--color-light-red);
+  border-top-right-radius: 20px;
+  border-bottom-right-radius: 20px;
+  padding: 10px;
+}
+html {
+  scroll-behavior: smooth;
+}
+
+.title-box {
+  display: flex;
+  justify-content: end;
+  width: 245px;
+}
+.bow-icon {
+  height: 28px;
+  aspect-ratio: 1;
+}
+.sword-icon {
+  height: 30px;
+  aspect-ratio: 1;
+}
+.weapons-box {
+  display: flex;
+  width: auto;
+  height: 410px;
+  padding: 15px;
+  border: 1px solid var(--color-light-red);
+  margin-inline: 40px;
+  border-radius: 20px;
+}
+.bow-image {
+  width: 300px;
+  height: 380px;
+}
+.sword-image {
+  width: 300px;
+  height: 380px;
+}
+.bow {
+  border: var(--border);
+  border-radius: 20px;
+  display: flex;
+  flex-direction: row;
+  width: 700px;
+  height: 380px;
+  margin-right: 15px;
+}
+.sword {
+  margin-inline: 15px;
+  border: var(--border);
+  border-radius: 20px;
+  width: 700px;
+  height: 380px;
+  display: flex;
+  flex-direction: row;
+}
+
+video {
+  border-radius: 20px;
+  width: 500px;
+
+}
+
+.description-video {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.stats-section {
+  padding: 40px 20px 60px;
+  color: var(--color-light);
+}
+
+.stats-section h2 {
+  margin: 0 0 16px;
+  color: var(--color-light-red);
+  font-family: 'Ruslan Display', sans-serif;
+}
+
+.stats-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 16px;
+}
+
+.stat-card {
+  background: rgba(255, 255, 255, 0.08);
+  border: 1px solid rgba(189, 0, 79, 0.45);
+  border-radius: 12px;
+  padding: 14px;
+  transition: transform 0.2s ease, box-shadow 0.2s ease, border-color 0.2s ease;
+  transform: translateY(25px);
+  opacity: 0;
+}
+
+.stat-card.in-view {
+  transform: translateY(0);
+  opacity: 1;
+}
+
+.stat-card:hover {
+  transform: translateY(-6px);
+  box-shadow: 0 14px 28px rgba(189, 0, 79, 0.2);
+  border-color: rgba(189, 0, 79, 0.8);
+}
+
+.stat-header {
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 8px;
+  font-weight: 600;
+  color: var(--color-light);
+}
+
+.site-footer {
+  padding: 20px 24px;
+  background: rgba(12, 12, 12, 0.95);
+  border-top: 1px solid rgba(189, 0, 79, 0.6);
+  color: var(--color-light);
+  text-align: center;
+  position: relative;
+}
+
+.site-footer .footer-content {
+  max-width: 980px;
+  margin: 0 auto;
+  line-height: 1.6;
+}
+
+.site-footer p {
+  margin: 4px 0;
+}
+
+.back-to-top {
+  position: fixed;
+  right: 22px;
+  bottom: 22px;
+  padding: 10px 16px;
+  border: 1px solid var(--color-light-red);
+  background: rgba(26, 26, 26, 0.95);
+  color: var(--color-light);
+  font-weight: 600;
+  border-radius: 8px;
+  cursor: pointer;
+  opacity: 0;
+  pointer-events: none;
+  transform: translateY(12px);
+  transition: opacity 0.25s ease, transform 0.25s ease, box-shadow 0.2s ease;
+}
+
+.back-to-top.visible {
+  opacity: 1;
+  pointer-events: auto;
+  transform: translateY(0);
+  box-shadow: 0 10px 20px rgba(189, 0, 79, 0.35);
+}
+
+.back-to-top:hover {
+  background: rgba(189, 0, 79, 0.15);
+  box-shadow: 0 12px 22px rgba(189, 0, 79, 0.46);
+}
+
+
+.stat-bar-track {
+  width: 100%;
+  height: 12px;
+  background: rgba(255, 255, 255, 0.15);
+  border-radius: 999px;
+  overflow: hidden;
+}
+
+.stat-bar-fill {
+  width: var(--fill);
+  height: 100%;
+  background: linear-gradient(90deg, var(--color-light-red), rgba(189, 0, 79, 0.7));
+  transition: width 0.65s ease, filter 0.2s ease;
+  box-shadow: 0 0 8px rgba(189, 0, 79, 0.3);
+}
+
+.stat-card:hover .stat-bar-fill {
+  filter: brightness(1.2);
+}
