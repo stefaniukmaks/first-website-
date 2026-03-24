@@ -11,6 +11,8 @@
 * HTML5
 * CSS3
 * Git / GitHub
+* Трохи JavaScript
+* GitHub Pages 
 
 ## 🚀 Як подивитися:
 Ви можете відкрити цей сайт за посиланням:
